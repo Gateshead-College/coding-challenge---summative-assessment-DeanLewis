@@ -6,19 +6,10 @@ public class MainMenu {
     ArrayList<Product> products = new ArrayList<>();
 
     public static void main(String[] args) {
-        MainMenu mm = new MainMenu();
-        mm.initialise();
-        while (true) {
-            mm.menu();
-        }
-    }
-
-    private void initialise() {
-        products.add(new Product(1, "Logitech", "G-502 Proteus", 54.99, 5));
-        products.add(new Product(2, "Samsung", "24\" Monitor", 109.99, 3));
-        products.add(new Product(3, "EVGA", "RTX 2080 TI SC", 749.99, 2));
-        products.add(new Product(4, "AMD", "Ryzen 3900X", 450.00, 2));
-        products.add(new Product(5, "Corsair", "Vengeance PRO 32GB", 220.99, 4));
+       Initialise init = new Initialise();
+       MainMenu mm = new MainMenu();
+       mm.products = init.getProducts(init.readFile(Initialise.productsFile));
+       while(true) mm.menu();
     }
 
     public void menu() {
@@ -139,6 +130,8 @@ public class MainMenu {
     }
 
     private void exitApplication() {
+        Initialise.writeData(products);
+        //System.exit(0);
     }
 
     private void displayProducts() {
