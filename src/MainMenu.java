@@ -4,13 +4,15 @@ import java.util.Scanner;
 public class MainMenu {
 
     ArrayList<Product> products = new ArrayList<>();
+    private boolean exit = false;
 
-    public static void main(String[] args) {
-       Initialise init = new Initialise();
-       MainMenu mm = new MainMenu();
-       mm.products = init.getProducts(init.readFile(Initialise.productsFile));
-       while(true) mm.menu();
+    public void getData() {
+        Initialise init = new Initialise();
+        products = init.getProducts(init.readFile(Initialise.productsFile));
+        while(!exit)
+        menu();
     }
+
 
     public void menu() {
         System.out.println("Please select an option from the list below:");
@@ -86,17 +88,13 @@ public class MainMenu {
                 editProduct.productID = Integer.parseInt(new Scanner(System.in).nextLine());
             } else if (choice == 2) {
                 editProduct.productManufacturer = new Scanner(System.in).nextLine();
-            }
-            else if (choice == 3) {
+            } else if (choice == 3) {
                 editProduct.productName = new Scanner(System.in).nextLine();
-            }
-            else if (choice == 4) {
+            } else if (choice == 4) {
                 editProduct.productPrice = Double.parseDouble(new Scanner(System.in).nextLine());
-            }
-            else if (choice == 5) {
+            } else if (choice == 5) {
                 editProduct.productStock = Integer.parseInt(new Scanner(System.in).nextLine());
-            }
-            else {
+            } else {
                 System.out.println("Invalid input provided, please try again.");
                 editProduct();
             }
@@ -131,7 +129,8 @@ public class MainMenu {
 
     private void exitApplication() {
         Initialise.writeData(products);
-        //System.exit(0);
+        products.clear();
+        exit = true;
     }
 
     private void displayProducts() {
